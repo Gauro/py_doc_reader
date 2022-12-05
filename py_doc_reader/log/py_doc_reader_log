@@ -1,3 +1,0 @@
-{"asctime": "2022-11-20 13:18:03,537", "levelname": "INFO", "module": "main", "funcName": "run", "process": 26349, "message": "image1.png processed successfully. Time taken for processing file: 1.075927972793579"}
-{"asctime": "2022-11-20 13:18:03,944", "levelname": "INFO", "module": "main", "funcName": "run", "process": 26349, "message": "SampleEditablePDF.pdf processed successfully. Time taken for processing file: 0.40654778480529785"}
-{"asctime": "2022-11-20 13:18:09,060", "levelname": "INFO", "module": "main", "funcName": "run", "process": 26349, "message": "image1-compressed.pdf processed successfully. Time taken for processing file: 5.115361452102661"}
