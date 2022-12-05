@@ -207,41 +207,41 @@ class EditableDocExtractor:
             ldf_line_details = pd.concat(llist_line_details, ignore_index=True)
 
             # Assign Line x1 values
-            # ldf_line_details["Line_x1"] = ldf_line_details.apply(func=lambda x: ldf_line_details[
-            #     (ldf_line_details["LineIndex"] == x["LineIndex"]) & (
-            #             ldf_line_details["page_number"] == x["page_number"])]["x1"].min(), axis=1)
-            # # Assign Line y1 values
-            # ldf_line_details["Line_y1"] = \
-            #     ldf_line_details.apply(func=lambda x: ldf_line_details[
-            #         (ldf_line_details["LineIndex"] == x["LineIndex"]) & (
-            #                 ldf_line_details["page_number"] == x["page_number"])]["y1"].min(), axis=1)
-            # # Assign Line x2 values
-            # ldf_line_details["Line_x2"] = ldf_line_details.apply(func=lambda x: ldf_line_details[
-            #     (ldf_line_details["LineIndex"] == x["LineIndex"]) & (
-            #             ldf_line_details["page_number"] == x["page_number"])]["x2"].max(), axis=1)
-            # # Assign Line y2 values
-            # ldf_line_details["Line_y2"] = ldf_line_details.apply(func=lambda x: ldf_line_details[
-            #     (ldf_line_details["LineIndex"] == x["LineIndex"]) & (
-            #             ldf_line_details["page_number"] == x["page_number"])]["y2"].max(), axis=1)
+            ldf_line_details["Line_x1"] = ldf_line_details.apply(func=lambda x: ldf_line_details[
+                (ldf_line_details["LineIndex"] == x["LineIndex"]) & (
+                        ldf_line_details["page_number"] == x["page_number"])]["x1"].min(), axis=1)
+            # Assign Line y1 values
+            ldf_line_details["Line_y1"] = \
+                ldf_line_details.apply(func=lambda x: ldf_line_details[
+                    (ldf_line_details["LineIndex"] == x["LineIndex"]) & (
+                            ldf_line_details["page_number"] == x["page_number"])]["y1"].min(), axis=1)
+            # Assign Line x2 values
+            ldf_line_details["Line_x2"] = ldf_line_details.apply(func=lambda x: ldf_line_details[
+                (ldf_line_details["LineIndex"] == x["LineIndex"]) & (
+                        ldf_line_details["page_number"] == x["page_number"])]["x2"].max(), axis=1)
+            # Assign Line y2 values
+            ldf_line_details["Line_y2"] = ldf_line_details.apply(func=lambda x: ldf_line_details[
+                (ldf_line_details["LineIndex"] == x["LineIndex"]) & (
+                        ldf_line_details["page_number"] == x["page_number"])]["y2"].max(), axis=1)
 
-            # if SAVE_INTERMEDIATE:
-            #     for ldict_file_path in plist_file_paths:
-            #         lstr_image_path = ldict_file_path["page_path"]
-            #         lstr_image_file_name, _ = os.path.splitext(lstr_image_path.split(os.sep)[-1])
-            #         larr_temp_img = cv2.imread(lstr_image_path).copy()
-            #         ldf_grouped_lines = ldf_line_details[
-            #             ldf_line_details["page_number"] == ldict_file_path[
-            #                 "page_number"]].groupby(by="LineIndex").max()
-            #         ldf_grouped_lines.apply(
-            #             func=lambda x: cv2.rectangle(larr_temp_img, (
-            #                 x["Line_x1"],
-            #                 x["Line_y1"]), (
-            #                                              x["Line_x2"],
-            #                                              x["Line_y2"]), (0, 255, 0), 2),
-            #             axis=1)
-            #         cv2.imwrite(
-            #             pstr_intermediate_output_folder_path + os.sep + lstr_image_file_name + "_line_object_map.jpg",
-            #             larr_temp_img)
+            # Save Intermediate outputs
+            for ldict_file_path in plist_file_paths:
+                lstr_image_path = ldict_file_path["ImagePath"]
+                lstr_image_file_name, _ = os.path.splitext(lstr_image_path.split(os.sep)[-1])
+                larr_temp_img = cv2.imread(lstr_image_path).copy()
+                ldf_grouped_lines = ldf_line_details[
+                    ldf_line_details["page_number"] == ldict_file_path[
+                        "PageNo"]].groupby(by="LineIndex").max()
+                ldf_grouped_lines.apply(
+                    func=lambda x: cv2.rectangle(larr_temp_img, (
+                        x["Line_x1"],
+                        x["Line_y1"]), (
+                                                     x["Line_x2"],
+                                                     x["Line_y2"]), (0, 255, 0), 2),
+                    axis=1)
+                cv2.imwrite(
+                    pstr_intermediate_output_folder_path + os.sep + lstr_image_file_name + "_line_object_map.jpg",
+                    larr_temp_img)
             return ldf_line_details
         except Exception as e:
             logger.error(str(e), exc_info=True)
