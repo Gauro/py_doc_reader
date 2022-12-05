@@ -47,5 +47,6 @@ main file after configuring the PATH variables in the config files. The code flo
    processing.
 3. Image files and scanned pdf images will be routed to Preprocessing (deskewing) and then Scanned Doc Extractor
 4. Editable PDFs wil be routed to Editable PDF Extractor to obtain text extractions. 
+5. The intermediates are generated for each class in order to understand what each class does
 
 
