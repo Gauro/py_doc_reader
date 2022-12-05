@@ -1,0 +1,3 @@
+recursive-include py_doc_reader/data *
+recursive-include py_doc_reader/inputs *
+recursive-include py_doc_reader/outputs *
